@@ -229,9 +229,6 @@ body {
 .activo {
   display: flex;
 }
-#burger-menu {
-  border: 1pt solid red;
-}
 
 
 /* PRODUCTS */
@@ -241,7 +238,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
 /* Product Cards */
 .productCard {
   box-sizing: border-box;
@@ -269,7 +265,6 @@ body {
 .productCard:active {
   transform: scale(0.95);
 }
-
 /* PRODUCT CONTENT */
 .productCard > img {
   width: 150px;
@@ -310,7 +305,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 /* ADD TO CART BUTTON */
 .fancy {
   background-color: transparent;
@@ -406,7 +400,6 @@ body {
   right: 0;
   width: 0;
 }
-
 /* NO RESULTS */
 .no-results {
   font-size: 30px;

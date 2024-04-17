@@ -106,7 +106,6 @@ const printHeader = () => {
   label.htmlFor = 'burger';
   inputHam.type = 'checkbox';
   inputHam.id = 'burger';
-  divBurger.id = 'burger-menu';
   //! logo:
   imgLogo.src= "/assets/favicon.png";
   imgLogo.alt="Logo";
@@ -157,16 +156,134 @@ inputField.addEventListener('input', (e) => {
 });
 
 //! HIDE/UNHIDE SIDE SECTION
-const burgerBtn = document.getElementById("burger-menu");
+const burgerBtn = document.getElementById("burger");
 const sideSection = document.getElementById("filter");
 burgerBtn.addEventListener("click", () => {
   sideSection.classList.toggle("activo");
 });
 
+//! FUNCIÓN MAQUETAR SIDE SECTION
+const printSection = () => {
+  const sideSection = document.querySelector('#filter');
+
+  //? SELECT CATEGORY
+  const categorySelect = document.createElement('select');
+  const categoryOption = document.createElement('option');
+
+  categorySelect.id = 'category-select';
+  categoryOption.textContent = 'Select Category';
+  categoryOption.value = 'all';
+  categorySelect.insertBefore(categoryOption, categorySelect.firstChild);
+  const categories = Array.from(new Set(PRODUCTS.map(product => product.category))); // Para que no se repitan las categorias
+  for (const category of categories) {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    categorySelect.appendChild(option);
+  } 
+
+  categorySelect.appendChild(categoryOption);
+  sideSection.appendChild(categorySelect);
+
+  //? PRICE RANGE
+  const divPrice = document.createElement('div');
+  const priceTitle = document.createElement('h4');
+  const priceRange = document.createElement('input');
+  const divPriceLabel = document.createElement('div');
+  const minPrice = document.createElement('span');
+  const maxPrice = document.createElement('span');
+
+  priceRange.type = 'range';
+  priceRange.min = 0;
+  priceRange.max = 2000;
+  priceRange.value = 0;
+  priceRange.id = 'price-range';
+  divPrice.id = 'div-price-range';
+  divPriceLabel.id = 'price-labels';
+  minPrice.id = 'min-price';
+  maxPrice.id = 'max-price';
+  minPrice.textContent = `$${priceRange.min}`;
+  maxPrice.textContent = `$${priceRange.max}`;
+  priceTitle.textContent = 'Set the maximum price:'
+
+     // Update the labels whenever the user interacts with the range input
+         priceRange.addEventListener('input', () => {
+           maxPrice.textContent = `$${priceRange.value}`;
+         });
+
+  divPrice.appendChild(priceTitle);
+  divPrice.appendChild(priceRange);
+  divPrice.appendChild(divPriceLabel);
+  divPriceLabel.appendChild(minPrice);
+  divPriceLabel.appendChild(maxPrice);
+  sideSection.appendChild(divPrice);
+
+  //? FILTER BUTTON
+  const buttonSubmit = document.createElement('button');
+  const spanSubmitHover = document.createElement('span');
+  const spanSubmit = document.createElement('span');
+
+  buttonSubmit.classList.add('animated-button');
+  spanSubmitHover.textContent = 'Filter';
+  buttonSubmit.id = 'filter-btn';
+
+  buttonSubmit.appendChild(spanSubmitHover);
+  buttonSubmit.appendChild(spanSubmit);
+  sideSection.appendChild(buttonSubmit);
+
+
+  //? CLEAR FILTERS BUTTON
+  const buttonFilter = document.createElement('button');
+  const spanButton = document.createElement('span');
+  
+
+  spanButton.textContent = 'Clear Filters';
+  buttonFilter.id ='clearFilters';
+
+  buttonFilter.appendChild(spanButton);
+  sideSection.appendChild(buttonFilter);
+
+
+}
+printSection()
+
+
+//! FUNCION FILTER PRODUCTS
+const filterProducts  = () =>{
+  const categorySelect = document.getElementById('category-select').value;
+  const priceRange = document.getElementById('price-range');
+  const maxPrice = parseInt(priceRange.value, 10);
+  
+  const filteredCategory = PRODUCTS.filter(product => {
+    const categoryMatch = categorySelect === 'all' || product.category === categorySelect;
+    const priceMatch = product.price <= maxPrice;
+    return categoryMatch && priceMatch;
+  })
+  const filteredPrice = PRODUCTS.filter(product => product.price <= maxPrice);
+  printProducts(filteredCategory);
+}
+//? Event Listener Category:
+const filterButton = document.getElementById('filter-btn');
+filterButton.addEventListener( "click", filterProducts)
+
+//! FUNCIÓN PARA REESTABLECER LOS FILTROS A VALORES INICIALES
+function resetFilters() {
+  document.getElementById('category-select').value = 'all'; // Pone categoria a "todas"
+  document.getElementById("price-range").value=0 // Establece el rango de precio en cero
+  const maxPrice = document.getElementById("max-price");
+  maxPrice.textContent = '$2000';
+  printProducts(PRODUCTS); // Muestra todos los productos sin filtrar
+}
+//? Event Listener:
+const clearFilters = document.getElementById('clearFilters');
+clearFilters.addEventListener('click',resetFilters);
+
 
 //! FUNCIÓN CARTAS DE PRODUCTOS -> para que sea más fácil pintarlo en html creamos un bucle que se repite
 const printProducts  = (products) => {
-  const productSection = document.querySelector('#products')
+  const productSection = document.querySelector('#products');
+
+  productSection.innerHTML = '';
 
   for (const product of products) {
   
