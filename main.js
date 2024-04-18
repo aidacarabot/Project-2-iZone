@@ -347,6 +347,7 @@ const filterProducts  = () =>{
 //? Event Listener Category:
 const filterButton = document.getElementById('filter-btn');
 filterButton.addEventListener( "click", filterProducts)
+
 //! FUNCIÓN PARA REESTABLECER LOS FILTROS A VALORES INICIALES
 function resetFilters() {
   document.getElementById('category-select').value = 'all'; // Pone categoria a "todas"
@@ -359,6 +360,9 @@ function resetFilters() {
 const clearFilters = document.getElementById('clearFilters');
 clearFilters.addEventListener('click',resetFilters);
 
+//? Event Listener:
+const divLogoReset = document.querySelector('.logoDiv');
+divLogoReset.addEventListener('click', resetFilters);
 
 
 
