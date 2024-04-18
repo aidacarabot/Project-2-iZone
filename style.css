@@ -6,6 +6,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
+  scroll-behavior: smooth;
 }
 
 ul,
@@ -230,10 +231,15 @@ body {
   align-items: center;
   justify-content: space-around;
   padding: var(--rtc-padding-l);
+  opacity: 0; /* Set the opacity to 0 to start with */
+  transition: opacity 0.5s ease-in-out; /* Add a transition effect to the opacity property */
 }
+
 .activo {
   display: flex;
+  opacity: 1; /* Set the opacity to 1 when the element is activated */
 }
+
 
 /* SELECT CATEGORY */
 #category-select {
@@ -494,4 +500,25 @@ button:hover::before {
   flex-direction: column;
   font-size: 30px;
   text-align: center;
+}
+
+/* MEDIAS QUERIES */
+
+@media (width < 620px) {
+  .sections {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #filter {
+    width: 300px;
+  }
+  .input-container {
+    display: none;
+  }
+  .logoDiv {
+    margin-right: 20%;
+  }
+
 }
