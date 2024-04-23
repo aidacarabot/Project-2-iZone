@@ -316,22 +316,23 @@ printSection()
 
 //! FUNCION FILTER PRODUCTS
 const filterProducts  = () =>{
-  const categorySelect = document.getElementById('category-select').value;
+  const categorySelect = document.getElementById('category-select').value; // Obtiene el valor seleccionado en el filtro de categoría
   const priceRange = document.getElementById('price-range');
   const maxPrice = parseInt(priceRange.value, 10);
   
-  const filteredCategory = PRODUCTS.filter(product => {
+  const filteredProducts = PRODUCTS.filter(product => {
     const categoryMatch = categorySelect === 'all' || product.category === categorySelect;
     const priceMatch = product.price <= maxPrice;
     return categoryMatch && priceMatch;
   })
+
   // Clear the existing product cards
   const productSection = document.querySelector('#products');
   productSection.innerHTML = '';
 
-  // Print the filtered products
-  if (filteredCategory.length > 0) {
-    printProducts(filteredCategory);
+  //! Print the filtered products
+  if (filteredProducts.length > 0) {
+    printProducts(filteredProducts);
   } else {
      // Print up to 3 suggested products
      const suggestedProducts = shuffleArray(PRODUCTS).slice(0, 3);
@@ -344,6 +345,7 @@ const filterProducts  = () =>{
     productSection.appendChild(message);
   }
 }
+
 //? Event Listener Category:
 const filterButton = document.getElementById('filter-btn');
 filterButton.addEventListener( "click", filterProducts)
