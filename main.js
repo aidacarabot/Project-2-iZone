@@ -322,7 +322,7 @@ const filterProducts  = () =>{
   
   const filteredProducts = PRODUCTS.filter(product => {
     const categoryMatch = categorySelect === 'all' || product.category === categorySelect;
-    const priceMatch = product.price <= maxPrice;
+    const priceMatch = product.price <= maxPrice || product.price === '' || maxPrice === '';
     return categoryMatch && priceMatch;
   })
 
