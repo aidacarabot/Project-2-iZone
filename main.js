@@ -318,11 +318,11 @@ printSection()
 const filterProducts  = () =>{
   const categorySelect = document.getElementById('category-select').value; // Obtiene el valor seleccionado en el filtro de categoría
   const priceRange = document.getElementById('price-range');
-  const maxPrice = parseInt(priceRange.value, 10);
+  const maxPrice = parseInt(priceRange.value, 10) || Infinity;
   
   const filteredProducts = PRODUCTS.filter(product => {
     const categoryMatch = categorySelect === 'all' || product.category === categorySelect;
-    const priceMatch = product.price <= maxPrice || product.price === '' || maxPrice === '';
+    const priceMatch = product.price <= maxPrice;
     return categoryMatch && priceMatch;
   })
 
